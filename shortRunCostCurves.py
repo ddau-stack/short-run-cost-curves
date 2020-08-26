@@ -44,8 +44,12 @@ def createMarginalRevenue(cost_per_unit, quantity):
 		array.append(float(cost_per_unit))
 	return array
 
-def printCosts(phrase, array):
-	print(phrase)
+def computeProfitMaxQuantity(marginal_revenue, marginal_costs, total_quantity):
+	for i in range(total_quantity-1, -1, -1):
+		if marginal_costs[i] < marginal_revenue[i]:
+			return i
+
+def printCosts(array):
 	size = len(array)
 	for i in range(size):
 		print(array[i])
@@ -55,9 +59,9 @@ def printCosts(phrase, array):
 total_quantity = int(input("What is the total quantity of output? "))
 cost_per_unit = float(input("Enter the cost per unit: "))
 fixed_cost = float(input("Enter the total fixed costs: "))
+variable_costs = createVariableCosts(total_quantity)
 
 # computes the costs
-variable_costs = createVariableCosts(total_quantity)
 total_quantity = total_quantity + 1;
 total_costs = createTotalCosts(fixed_cost, variable_costs, total_quantity)
 marginal_costs = createMarginalCosts(total_costs, total_quantity)
@@ -66,6 +70,12 @@ avg_variable_costs = createAvgCost(variable_costs, total_quantity)
 avg_total_costs = createAvgCost(total_costs, total_quantity)
 avg_fixed_costs = createAvgFixedCosts(fixed_cost, total_quantity)
 
+# economical analysis
+print()
+print("Economical analysis:")
+max_profit_quantity = computeProfitMaxQuantity(marginal_revenue, marginal_costs, total_quantity)
+print("Profit maximizing quantity: " + str(max_profit_quantity))
+
 # creates the x axis for the graph
 quantity = createQuantities(total_quantity)
 
@@ -73,6 +83,7 @@ quantity = createQuantities(total_quantity)
 plot.title("Short Run Cost Curves")
 plot.xlabel("Quantity")
 plot.ylabel("Price")
+
 plot.plot(quantity, avg_variable_costs, label = "Average Variable Cost")
 plot.plot(quantity, avg_fixed_costs, label = "Average Fixed Cost")
 plot.plot(quantity, avg_total_costs, label = "Average Total Cost")
