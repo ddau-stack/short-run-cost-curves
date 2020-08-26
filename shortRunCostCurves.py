@@ -18,10 +18,10 @@ def createVariableCostsFromFile(quantity, file):
 	return tempList
 
 # creates a list for total costs with the formula total cost = variable cost + fixed cost
-def createTotalCosts(fixed_cost, variable_costs, quantity):
+def createTotalCosts(fixedCost, variableCosts, quantity):
 	tempList = []
 	for i in range(quantity):
-		tempList.append(variable_costs[i] + fixed_cost)
+		tempList.append(variableCosts[i] + fixedCost)
 	return tempList 
 
 # creates a list for the average costs of either the total costs or variable costs with the
@@ -33,10 +33,10 @@ def createAvgCost(cost_type, quantity):
 	return tempList
 
 # creates a list for the average fixed costs
-def createAvgFixedCosts(fixed_cost, quantity):
+def createAvgFixedCosts(fixedCost, quantity):
 	tempList = []
 	for i in range(quantity):
-		tempList.append(float(fixed_cost)/(i+1))
+		tempList.append(float(fixedCost)/(i+1))
 	return tempList
 
 # creates a list from 0 to the quantity
@@ -48,37 +48,37 @@ def createQuantities(quantity):
 
 # creates a list for the marginal costs with the formula
 # maginal cost = total cost at a specified quantity - total cost at the previous quantity
-def createMarginalCosts(total_costs, quantity):
+def createMarginalCosts(totalCosts, quantity):
 	tempList = []
 	tempList.append(float(0))
 	for i in range(quantity-1):
-		tempList.append(float(total_costs[i+1] - total_costs[i]))
+		tempList.append(float(totalCosts[i+1] - totalCosts[i]))
 	return tempList
 
 # creates a list representing the marginal revenue which is equal to the price per unit
-def createMarginalRevenue(price_per_unit, quantity):
+def createMarginalRevenue(pricePerUnit, quantity):
 	tempList = []
 	for i in range(quantity):
-		tempList.append(float(price_per_unit))
+		tempList.append(float(pricePerUnit))
 	return tempList
 
 # computes the profit maximizing quantity by looking for the quantity just below the point
 # where the marginal cost is equal to the marginal revenue
-def computeProfitMaxQuantity(marginal_revenue, marginal_costs, total_quantity):
-	for i in range(total_quantity-1, -1, -1):
-		if marginal_costs[i] < marginal_revenue[i]:
+def computeProfitMaxQuantity(marginalRevenue, marginalCosts, totalQuantity):
+	for i in range(totalQuantity-1, -1, -1):
+		if marginalCosts[i] < marginalRevenue[i]:
 			return i
 	return 0
 
 # computes the total revenue with the formula profit maximizing quantity * 
 # marginal revenue at the profit maximizing quantity
-def computeTotalRevenue(marginal_revenue, max_profit_quantity):
-	return marginal_revenue[max_profit_quantity] * max_profit_quantity
+def computeTotalRevenue(marginalRevenue, maxProfitQuantity):
+	return marginalRevenue[maxProfitQuantity] * maxProfitQuantity
 
 # computes the total profit with the formula total revenue - 
 # (average total cost * average total cost at the profit maximizing quantity)
-def computeTotalProfit(total_revenue, avg_total_costs, max_profit_quantity):
-	return total_revenue - (avg_total_costs[max_profit_quantity] * max_profit_quantity)
+def computeTotalProfit(totalRevenue, avgTotalCosts, maxProfitQuantity):
+	return totalRevenue - (avgTotalCosts[maxProfitQuantity] * maxProfitQuantity)
 
 # a function to print a list
 def printCosts(tempList):
@@ -95,19 +95,19 @@ while True:
 		userInput = 4
 	# get inputs from standard input
 	if userInput == 1:
-		total_quantity = int(input("What is the total quantity of output? "))
-		price_per_unit = float(input("Enter the price per unit: "))
-		fixed_cost = float(input("Enter the total fixed costs: "))
-		variable_costs = createVariableCosts(total_quantity)
+		totalQuantity = int(input("What is the total quantity of output? "))
+		pricePerUnit = float(input("Enter the price per unit: "))
+		fixedCost = float(input("Enter the total fixed costs: "))
+		variableCosts = createVariableCosts(totalQuantity)
 		break
 	# get inputs from file
 	elif userInput == 2:
 		file_name = str(input("Enter the name of the file you wish to be use: "))
 		file = open(file_name, "r")
-		total_quantity = int(file.readline())
-		price_per_unit = float(file.readline())
-		fixed_cost = float(file.readline())
-		variable_costs = createVariableCostsFromFile(total_quantity, file)
+		totalQuantity = int(file.readline())
+		pricePerUnit = float(file.readline())
+		fixedCost = float(file.readline())
+		variableCosts = createVariableCostsFromFile(totalQuantity, file)
 		file.close()
 		break
 	# exits the program
@@ -117,26 +117,26 @@ while True:
 		print("Invalid choice, please try again")
 
 # computes the costs
-total_quantity = total_quantity + 1;
-total_costs = createTotalCosts(fixed_cost, variable_costs, total_quantity)
-marginal_costs = createMarginalCosts(total_costs, total_quantity)
-marginal_revenue = createMarginalRevenue(price_per_unit, total_quantity)
-avg_variable_costs = createAvgCost(variable_costs, total_quantity)
-avg_total_costs = createAvgCost(total_costs, total_quantity)
-avg_fixed_costs = createAvgFixedCosts(fixed_cost, total_quantity)
+totalQuantity = totalQuantity + 1;
+totalCosts = createTotalCosts(fixedCost, variableCosts, totalQuantity)
+marginalCosts = createMarginalCosts(totalCosts, totalQuantity)
+marginalRevenue = createMarginalRevenue(pricePerUnit, totalQuantity)
+avgVariableCosts = createAvgCost(variableCosts, totalQuantity)
+avgTotalCosts = createAvgCost(totalCosts, totalQuantity)
+avgFixedCosts = createAvgFixedCosts(fixedCost, totalQuantity)
 
 # economical analysis
 print()
 print("Economical analysis:")
-max_profit_quantity = computeProfitMaxQuantity(marginal_revenue, marginal_costs, total_quantity)
-total_revenue = computeTotalRevenue(marginal_revenue, max_profit_quantity)
-total_profit = computeTotalProfit(total_revenue, avg_total_costs, max_profit_quantity)
-print("Profit maximizing quantity: " + str(max_profit_quantity))
-print("Total Revenue: " + str(total_revenue))
-print("Total Profit: " + str(total_profit))
+maxProfitQuantity = computeProfitMaxQuantity(marginalRevenue, marginalCosts, totalQuantity)
+totalRevenue = computeTotalRevenue(marginalRevenue, maxProfitQuantity)
+totalProfit = computeTotalProfit(totalRevenue, avgTotalCosts, maxProfitQuantity)
+print("Profit maximizing quantity: " + str(maxProfitQuantity))
+print("Total Revenue: " + str(totalRevenue))
+print("Total Profit: " + str(totalProfit))
 
 # creates the x axis for the graph
-quantity = createQuantities(total_quantity)
+quantity = createQuantities(totalQuantity)
 
 # creates the labels for the graph
 plot.title("Short Run Cost Curves")
@@ -144,10 +144,10 @@ plot.xlabel("Quantity")
 plot.ylabel("Price")
 
 # plots the graph
-plot.plot(quantity, avg_variable_costs, label = "Average Variable Cost")
-plot.plot(quantity, avg_fixed_costs, label = "Average Fixed Cost")
-plot.plot(quantity, avg_total_costs, label = "Average Total Cost")
-plot.plot(quantity, marginal_costs, label = "Marginal Cost")
-plot.plot(quantity, marginal_revenue, label = "Marginal Revenue")
+plot.plot(quantity, avgVariableCosts, label = "Average Variable Cost")
+plot.plot(quantity, avgFixedCosts, label = "Average Fixed Cost")
+plot.plot(quantity, avgTotalCosts, label = "Average Total Cost")
+plot.plot(quantity, marginalCosts, label = "Marginal Cost")
+plot.plot(quantity, marginalRevenue, label = "Marginal Revenue")
 plot.legend()
 plot.show()
