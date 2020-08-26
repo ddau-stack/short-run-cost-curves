@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plot
+import sys
 
 def createVariableCosts(quantity):
 	array = []
@@ -48,6 +49,7 @@ def computeProfitMaxQuantity(marginal_revenue, marginal_costs, total_quantity):
 	for i in range(total_quantity-1, -1, -1):
 		if marginal_costs[i] < marginal_revenue[i]:
 			return i
+	return 0
 
 def printCosts(array):
 	size = len(array)
@@ -55,11 +57,26 @@ def printCosts(array):
 		print(array[i])
 	print()
 
-# get inputs
-total_quantity = int(input("What is the total quantity of output? "))
-cost_per_unit = float(input("Enter the cost per unit: "))
-fixed_cost = float(input("Enter the total fixed costs: "))
-variable_costs = createVariableCosts(total_quantity)
+# opening menu
+user_input = 4
+while True:
+	try:
+		user_input = int(input("How are you providing the input?\nEnter 1 for manual input\nEnter 2 to provide input from a file\nEnter 3 to exit: "))
+	except:
+		user_input = 4
+	if user_input == 1:
+		# get inputs from standard input
+		total_quantity = int(input("What is the total quantity of output? "))
+		cost_per_unit = float(input("Enter the cost per unit: "))
+		fixed_cost = float(input("Enter the total fixed costs: "))
+		variable_costs = createVariableCosts(total_quantity)
+		break
+	elif user_input == 2:
+		#get inputs from file
+	elif user_input == 3:
+		sys.exit()
+	else:
+		print("Invalid choice, please try again")
 
 # computes the costs
 total_quantity = total_quantity + 1;
