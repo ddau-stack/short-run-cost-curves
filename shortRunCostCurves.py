@@ -155,7 +155,7 @@ print("Total Profit: " + str(totalProfit))
 quantity = createQuantities(totalQuantity)
 
 # creates the labels for the graph
-plot.title("Short Run Cost Curves")
+plot.title("Short-Run Cost Curves")
 plot.xlabel("Quantity")
 plot.ylabel("Price")
 
