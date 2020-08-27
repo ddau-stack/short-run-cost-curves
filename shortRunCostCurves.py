@@ -66,7 +66,7 @@ def createMarginalRevenue(pricePerUnit, quantity):
 # where the marginal cost is equal to the marginal revenue
 def computeProfitMaxQuantity(marginalRevenue, marginalCosts, totalQuantity):
 	for i in range(totalQuantity-1, -1, -1):
-		if marginalCosts[i] < marginalRevenue[i]:
+		if marginalCosts[i] <= marginalRevenue[i]:
 			return i
 	return 0
 
@@ -79,6 +79,12 @@ def computeTotalRevenue(marginalRevenue, maxProfitQuantity):
 # (average total cost * average total cost at the profit maximizing quantity)
 def computeTotalProfit(totalRevenue, avgTotalCosts, maxProfitQuantity):
 	return totalRevenue - (avgTotalCosts[maxProfitQuantity] * maxProfitQuantity)
+
+def checkFileSize(file):
+	fileContents = file.readlines()
+	file.seek(0)
+	if(len(fileContents) != (int(fileContents[0]) + 3)):
+		print("Invalid file size")
 
 # a function to print a list
 def printCosts(tempList):
@@ -102,13 +108,23 @@ while True:
 		break
 	# get inputs from file
 	elif userInput == 2:
-		file_name = str(input("Enter the name of the file you wish to be use: "))
-		file = open(file_name, "r")
-		totalQuantity = int(file.readline())
-		pricePerUnit = float(file.readline())
-		fixedCost = float(file.readline())
-		variableCosts = createVariableCostsFromFile(totalQuantity, file)
-		file.close()
+		while True:
+			try:
+				file_name = str(input("Enter the path of the file you wish to use or type \"exit\" to exit: "))
+				if file_name == "exit":
+					sys.exit()
+				file = open(file_name, "r")
+				checkFileSize(file)
+				totalQuantity = int(file.readline())
+				pricePerUnit = float(file.readline())
+				fixedCost = float(file.readline())
+				variableCosts = createVariableCostsFromFile(totalQuantity, file)
+				file.close()
+				break
+			except FileNotFoundError:
+				print("File not found. Please try again")
+			except ValueError:
+				print("Invalid characters found in file or invalid number of inputs. Please try again")
 		break
 	# exits the program
 	elif userInput == 3:
