@@ -9,6 +9,7 @@ def createVariableCosts(quantity):
 		tempList.append(float(input("Enter the variable cost when " + str(i+1) + " output is produced: ")))
 	return tempList
 
+# checks if the file is the appropriate size for reading
 def checkFileSize(file):
 	fileContents = file.readlines()
 	file.seek(0)
@@ -30,28 +31,6 @@ def createTotalCosts(fixedCost, variableCosts, quantity):
 		tempList.append(variableCosts[i] + fixedCost)
 	return tempList 
 
-# creates a list for the average costs of either the total costs or variable costs with the
-# formula average cost = cost at a specific quantity / the specific quantity
-def createAvgCost(cost_type, quantity):
-	tempList = []
-	for i in range(quantity):
-		tempList.append(float(cost_type[i]/(i+1)))
-	return tempList
-
-# creates a list for the average fixed costs
-def createAvgFixedCosts(fixedCost, quantity):
-	tempList = []
-	for i in range(quantity):
-		tempList.append(float(fixedCost)/(i+1))
-	return tempList
-
-# creates a list from 0 to the quantity
-def createQuantities(quantity):
-	tempList = []
-	for i in range(quantity):
-		tempList.append(int(i))
-	return tempList
-
 # creates a list for the marginal costs with the formula
 # maginal cost = total cost at a specified quantity - total cost at the previous quantity
 def createMarginalCosts(totalCosts, quantity):
@@ -66,6 +45,21 @@ def createMarginalRevenue(pricePerUnit, quantity):
 	tempList = []
 	for i in range(quantity):
 		tempList.append(float(pricePerUnit))
+	return tempList
+
+# creates a list for the average costs of either the total costs or variable costs with the
+# formula average cost = cost at a specific quantity / the specific quantity
+def createAvgCost(cost_type, quantity):
+	tempList = []
+	for i in range(quantity):
+		tempList.append(float(cost_type[i]/(i+1)))
+	return tempList
+
+# creates a list for the average fixed costs
+def createAvgFixedCosts(fixedCost, quantity):
+	tempList = []
+	for i in range(quantity):
+		tempList.append(float(fixedCost)/(i+1))
 	return tempList
 
 # computes the profit maximizing quantity by looking for the quantity just below or equal
@@ -86,7 +80,20 @@ def computeTotalRevenue(marginalRevenue, maxProfitQuantity):
 def computeTotalProfit(totalRevenue, totalCosts, maxProfitQuantity):
 	return totalRevenue - totalCosts[maxProfitQuantity]
 
-# a function to print a list
+# prints a statement in the economic analysis if the shut down rule is met
+# (when the price per unit is less than the average variable cost)
+def checkShutDownRule(pricePerUnit, avgVariableCosts, maxProfitQuantity):
+	if(pricePerUnit < avgVariableCosts[maxProfitQuantity]):
+		print("This firm should shut down")
+
+# creates a list from 0 to the quantity
+def createQuantities(quantity):
+	tempList = []
+	for i in range(quantity):
+		tempList.append(int(i))
+	return tempList
+
+# a function to print a list for testing
 def printCosts(tempList):
 	size = len(tempList)
 	for i in range(size):
@@ -142,14 +149,15 @@ avgTotalCosts = createAvgCost(totalCosts, totalQuantity)
 avgFixedCosts = createAvgFixedCosts(fixedCost, totalQuantity)
 
 # economical analysis
-print()
-print("Economical analysis:")
 maxProfitQuantity = computeProfitMaxQuantity(marginalRevenue, marginalCosts, totalQuantity)
 totalRevenue = computeTotalRevenue(marginalRevenue, maxProfitQuantity)
 totalProfit = computeTotalProfit(totalRevenue, totalCosts, maxProfitQuantity)
+print()
+print("Economical analysis:")
 print("Profit maximizing quantity: " + str(maxProfitQuantity))
 print("Total Revenue: " + str(totalRevenue))
 print("Total Profit: " + str(totalProfit))
+checkShutDownRule(pricePerUnit, avgVariableCosts, maxProfitQuantity)
 
 # creates the x axis for the graph
 quantity = createQuantities(totalQuantity)
