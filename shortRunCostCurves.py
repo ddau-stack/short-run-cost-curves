@@ -9,6 +9,12 @@ def createVariableCosts(quantity):
 		tempList.append(float(input("Enter the variable cost when " + str(i+1) + " output is produced: ")))
 	return tempList
 
+def checkFileSize(file):
+	fileContents = file.readlines()
+	file.seek(0)
+	if(len(fileContents) != (int(fileContents[0]) + 3)):
+		raise ValueError()
+
 # reads the variable costs from a file and stores them into a list
 def createVariableCostsFromFile(quantity, file):
 	tempList = []
@@ -66,7 +72,7 @@ def createMarginalRevenue(pricePerUnit, quantity):
 # where the marginal cost is equal to the marginal revenue
 def computeProfitMaxQuantity(marginalRevenue, marginalCosts, totalQuantity):
 	for i in range(totalQuantity-1, -1, -1):
-		if marginalCosts[i] <= marginalRevenue[i]:
+		if marginalCosts[i] < marginalRevenue[i]:
 			return i
 	return 0
 
@@ -79,12 +85,6 @@ def computeTotalRevenue(marginalRevenue, maxProfitQuantity):
 # (average total cost * average total cost at the profit maximizing quantity)
 def computeTotalProfit(totalRevenue, avgTotalCosts, maxProfitQuantity):
 	return totalRevenue - (avgTotalCosts[maxProfitQuantity] * maxProfitQuantity)
-
-def checkFileSize(file):
-	fileContents = file.readlines()
-	file.seek(0)
-	if(len(fileContents) != (int(fileContents[0]) + 3)):
-		print("Invalid file size")
 
 # a function to print a list
 def printCosts(tempList):
@@ -118,7 +118,7 @@ while True:
 				totalQuantity = int(file.readline())
 				pricePerUnit = float(file.readline())
 				fixedCost = float(file.readline())
-				variableCosts = createVariableCostsFromFile(totalQuantity, file)
+#				variableCosts = createVariableCostsFromFile(totalQuantity, file)
 				file.close()
 				break
 			except FileNotFoundError:
