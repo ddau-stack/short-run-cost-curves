@@ -68,11 +68,11 @@ def createMarginalRevenue(pricePerUnit, quantity):
 		tempList.append(float(pricePerUnit))
 	return tempList
 
-# computes the profit maximizing quantity by looking for the quantity just below the point
-# where the marginal cost is equal to the marginal revenue
+# computes the profit maximizing quantity by looking for the quantity just below or equal
+# to the point where the marginal cost is equal to the marginal revenue
 def computeProfitMaxQuantity(marginalRevenue, marginalCosts, totalQuantity):
 	for i in range(totalQuantity-1, -1, -1):
-		if marginalCosts[i] < marginalRevenue[i]:
+		if marginalCosts[i] <= marginalRevenue[i]:
 			return i
 	return 0
 
@@ -82,9 +82,9 @@ def computeTotalRevenue(marginalRevenue, maxProfitQuantity):
 	return marginalRevenue[maxProfitQuantity] * maxProfitQuantity
 
 # computes the total profit with the formula total revenue - 
-# (average total cost * average total cost at the profit maximizing quantity)
-def computeTotalProfit(totalRevenue, avgTotalCosts, maxProfitQuantity):
-	return totalRevenue - (avgTotalCosts[maxProfitQuantity] * maxProfitQuantity)
+# total cost at the profit maximizing quantity
+def computeTotalProfit(totalRevenue, totalCosts, maxProfitQuantity):
+	return totalRevenue - totalCosts[maxProfitQuantity]
 
 # a function to print a list
 def printCosts(tempList):
@@ -118,7 +118,7 @@ while True:
 				totalQuantity = int(file.readline())
 				pricePerUnit = float(file.readline())
 				fixedCost = float(file.readline())
-#				variableCosts = createVariableCostsFromFile(totalQuantity, file)
+				variableCosts = createVariableCostsFromFile(totalQuantity, file)
 				file.close()
 				break
 			except FileNotFoundError:
@@ -146,7 +146,7 @@ print()
 print("Economical analysis:")
 maxProfitQuantity = computeProfitMaxQuantity(marginalRevenue, marginalCosts, totalQuantity)
 totalRevenue = computeTotalRevenue(marginalRevenue, maxProfitQuantity)
-totalProfit = computeTotalProfit(totalRevenue, avgTotalCosts, maxProfitQuantity)
+totalProfit = computeTotalProfit(totalRevenue, totalCosts, maxProfitQuantity)
 print("Profit maximizing quantity: " + str(maxProfitQuantity))
 print("Total Revenue: " + str(totalRevenue))
 print("Total Profit: " + str(totalProfit))
