@@ -19,9 +19,16 @@ price per unit
 fixed cost
 variable costs
 
-note: if the number of variable costs is greater than the total quantity, the program will only read the number of variable costs equal to the total quantity 
+notes: 
+    -if the number of variable costs is greater than the total quantity, the program will only read the number of variable costs equal to the total quantity 
+    -the script will not accept any value less than or equal to 0 for the total quantity and price per unit
 
-Run the code with the following command:
+Run the script with the following command:
 ```
 python3 shortRunCostCurves.py
+```
+
+Run the unit tests with the following command:
+```
+python3 test_shortRunCostCurves.py -b
 ```
