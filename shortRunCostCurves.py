@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plot
 import sys
 
-def createTotalQuantity():
+def readTotalQuantity():
 	while True:
 		try: 
 			totalQuantity = int(input("What is the total quantity of output? "))
@@ -11,6 +11,17 @@ def createTotalQuantity():
 		except ValueError:
 			print("Invalid quantity, please try again")
 	return totalQuantity
+
+def readPricePerUnit():
+	while True:
+		try: 
+			pricePerUnit = float(input("Enter the price per unit: "))
+			if pricePerUnit <= 0:
+				raise ValueError()
+			break
+		except ValueError:
+			print("Invalid price per unit, please try again")
+	return pricePerUnit
 
 # reads the variable costs from standard input and stores them into a list
 def createVariableCosts(quantity):
@@ -27,9 +38,14 @@ def checkFileSize(file):
 	if(len(fileContents) != (int(fileContents[0]) + 3)):
 		raise ValueError()
 
-def createTotalQuantityFromFile():
+def readTotalQuantityFromFile():
 	totalQuantity = int(file.readline())
 	if totalQuantity <= 0:
+		raise ValueError()
+
+def readPricePerUnitFromFile():
+	pricePerUnit = float(file.readline())
+	if pricePerUnit <= 0:
 		raise ValueError()
 
 # reads the variable costs from a file and stores them into a list
@@ -125,8 +141,8 @@ if __name__ == '__main__':
 			userInput = 4
 		# get inputs from standard input
 		if userInput == 1:
-			totalQuantity = createTotalQuantity()
-			pricePerUnit = float(input("Enter the price per unit: "))
+			totalQuantity = readTotalQuantity()
+			pricePerUnit = readPricePerUnit()
 			fixedCost = float(input("Enter the total fixed costs: "))
 			variableCosts = createVariableCosts(totalQuantity)
 			break
@@ -139,8 +155,8 @@ if __name__ == '__main__':
 						sys.exit()
 					file = open(file_name, "r")
 					checkFileSize(file)
-					totalQuantity = createTotalQuantityFromFile()
-					pricePerUnit = float(file.readline())
+					totalQuantity = readTotalQuantityFromFile()
+					pricePerUnit = readPricePerUnitFromFile()
 					fixedCost = float(file.readline())
 					variableCosts = createVariableCostsFromFile(totalQuantity, file)
 					file.close()
