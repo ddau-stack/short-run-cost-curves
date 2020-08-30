@@ -100,78 +100,79 @@ def printCosts(tempList):
 		print(tempList[i])
 	print()
 
-# opening menu
-while True:
-	try:
-		userInput = int(input("How are you providing the input?\nEnter 1 for manual input\nEnter 2 to provide input from a file\nEnter 3 to exit\n"))
-	except:
-		userInput = 4
-	# get inputs from standard input
-	if userInput == 1:
-		totalQuantity = int(input("What is the total quantity of output? "))
-		pricePerUnit = float(input("Enter the price per unit: "))
-		fixedCost = float(input("Enter the total fixed costs: "))
-		variableCosts = createVariableCosts(totalQuantity)
-		break
-	# get inputs from file
-	elif userInput == 2:
-		while True:
-			try:
-				file_name = str(input("Enter the path of the file you wish to use or type \"exit\" to exit: "))
-				if file_name == "exit":
-					sys.exit()
-				file = open(file_name, "r")
-				checkFileSize(file)
-				totalQuantity = int(file.readline())
-				pricePerUnit = float(file.readline())
-				fixedCost = float(file.readline())
-				variableCosts = createVariableCostsFromFile(totalQuantity, file)
-				file.close()
+if __name__ == '__main__':
+	# opening menu
+	while True:
+		try:
+			userInput = int(input("How are you providing the input?\nEnter 1 for manual input\nEnter 2 to provide input from a file\nEnter 3 to exit\n"))
+		except:
+			userInput = 4
+		# get inputs from standard input
+		if userInput == 1:
+			totalQuantity = int(input("What is the total quantity of output? "))
+			pricePerUnit = float(input("Enter the price per unit: "))
+			fixedCost = float(input("Enter the total fixed costs: "))
+			variableCosts = createVariableCosts(totalQuantity)
+			break
+		# get inputs from file
+		elif userInput == 2:
+			while True:
+				try:
+					file_name = str(input("Enter the path of the file you wish to use or type \"exit\" to exit: "))
+					if file_name == "exit":
+						sys.exit()
+					file = open(file_name, "r")
+					checkFileSize(file)
+					totalQuantity = int(file.readline())
+					pricePerUnit = float(file.readline())
+					fixedCost = float(file.readline())
+					variableCosts = createVariableCostsFromFile(totalQuantity, file)
+					file.close()
+					break
+				except FileNotFoundError:
+					print("File not found. Please try again")
+				except ValueError:
+					print("Invalid characters found in file or invalid number of inputs. Please try again")
 				break
-			except FileNotFoundError:
-				print("File not found. Please try again")
-			except ValueError:
-				print("Invalid characters found in file or invalid number of inputs. Please try again")
-		break
-	# exits the program
-	elif userInput == 3:
-		sys.exit()
-	else:
-		print("Invalid choice, please try again")
+		# exits the program
+		elif userInput == 3:
+			sys.exit()
+		else:
+			print("Invalid choice, please try again")
 
-# computes the costs
-totalQuantity = totalQuantity + 1;
-totalCosts = createTotalCosts(fixedCost, variableCosts, totalQuantity)
-marginalCosts = createMarginalCosts(totalCosts, totalQuantity)
-marginalRevenue = createMarginalRevenue(pricePerUnit, totalQuantity)
-avgVariableCosts = createAvgCost(variableCosts, totalQuantity)
-avgTotalCosts = createAvgCost(totalCosts, totalQuantity)
-avgFixedCosts = createAvgFixedCosts(fixedCost, totalQuantity)
+	# computes the costs
+	totalQuantity = totalQuantity + 1;
+	totalCosts = createTotalCosts(fixedCost, variableCosts, totalQuantity)
+	marginalCosts = createMarginalCosts(totalCosts, totalQuantity)
+	marginalRevenue = createMarginalRevenue(pricePerUnit, totalQuantity)
+	avgVariableCosts = createAvgCost(variableCosts, totalQuantity)
+	avgTotalCosts = createAvgCost(totalCosts, totalQuantity)
+	avgFixedCosts = createAvgFixedCosts(fixedCost, totalQuantity)
 
-# economical analysis
-maxProfitQuantity = computeProfitMaxQuantity(marginalRevenue, marginalCosts, totalQuantity)
-totalRevenue = computeTotalRevenue(marginalRevenue, maxProfitQuantity)
-totalProfit = computeTotalProfit(totalRevenue, totalCosts, maxProfitQuantity)
-print()
-print("Economical analysis:")
-print("Profit maximizing quantity: " + str(maxProfitQuantity))
-print("Total Revenue: " + str(totalRevenue))
-print("Total Profit: " + str(totalProfit))
-checkShutDownRule(pricePerUnit, avgVariableCosts, maxProfitQuantity)
+	# economical analysis
+	maxProfitQuantity = computeProfitMaxQuantity(marginalRevenue, marginalCosts, totalQuantity)
+	totalRevenue = computeTotalRevenue(marginalRevenue, maxProfitQuantity)
+	totalProfit = computeTotalProfit(totalRevenue, totalCosts, maxProfitQuantity)
+	print()
+	print("Economical analysis:")
+	print("Profit maximizing quantity: " + str(maxProfitQuantity))
+	print("Total Revenue: " + str(totalRevenue))
+	print("Total Profit: " + str(totalProfit))
+	checkShutDownRule(pricePerUnit, avgVariableCosts, maxProfitQuantity)
 
-# creates the x axis for the graph
-quantity = createQuantities(totalQuantity)
+	# creates the x axis for the graph
+	quantity = createQuantities(totalQuantity)
 
-# creates the labels for the graph
-plot.title("Short-Run Cost Curves")
-plot.xlabel("Quantity")
-plot.ylabel("Price")
+	# creates the labels for the graph
+	plot.title("Short-Run Cost Curves")
+	plot.xlabel("Quantity")
+	plot.ylabel("Price")
 
-# plots the graph
-plot.plot(quantity, avgVariableCosts, label = "Average Variable Cost")
-plot.plot(quantity, avgFixedCosts, label = "Average Fixed Cost")
-plot.plot(quantity, avgTotalCosts, label = "Average Total Cost")
-plot.plot(quantity, marginalCosts, label = "Marginal Cost")
-plot.plot(quantity, marginalRevenue, label = "Marginal Revenue")
-plot.legend()
-plot.show()
+	# plots the graph
+	plot.plot(quantity, avgVariableCosts, label = "Average Variable Cost")
+	plot.plot(quantity, avgFixedCosts, label = "Average Fixed Cost")
+	plot.plot(quantity, avgTotalCosts, label = "Average Total Cost")
+	plot.plot(quantity, marginalCosts, label = "Marginal Cost")
+	plot.plot(quantity, marginalRevenue, label = "Marginal Revenue")
+	plot.legend()
+	plot.show()
