@@ -1,6 +1,17 @@
 import matplotlib.pyplot as plot
 import sys
 
+def createTotalQuantity():
+	while True:
+		try: 
+			totalQuantity = int(input("What is the total quantity of output? "))
+			if totalQuantity <= 0:
+				raise ValueError()
+			break
+		except ValueError:
+			print("Invalid quantity, please try again")
+	return totalQuantity
+
 # reads the variable costs from standard input and stores them into a list
 def createVariableCosts(quantity):
 	tempList = []
@@ -14,6 +25,11 @@ def checkFileSize(file):
 	fileContents = file.readlines()
 	file.seek(0)
 	if(len(fileContents) != (int(fileContents[0]) + 3)):
+		raise ValueError()
+
+def createTotalQuantityFromFile():
+	totalQuantity = int(file.readline())
+	if totalQuantity <= 0:
 		raise ValueError()
 
 # reads the variable costs from a file and stores them into a list
@@ -109,7 +125,7 @@ if __name__ == '__main__':
 			userInput = 4
 		# get inputs from standard input
 		if userInput == 1:
-			totalQuantity = int(input("What is the total quantity of output? "))
+			totalQuantity = createTotalQuantity()
 			pricePerUnit = float(input("Enter the price per unit: "))
 			fixedCost = float(input("Enter the total fixed costs: "))
 			variableCosts = createVariableCosts(totalQuantity)
@@ -123,7 +139,7 @@ if __name__ == '__main__':
 						sys.exit()
 					file = open(file_name, "r")
 					checkFileSize(file)
-					totalQuantity = int(file.readline())
+					totalQuantity = createTotalQuantityFromFile()
 					pricePerUnit = float(file.readline())
 					fixedCost = float(file.readline())
 					variableCosts = createVariableCostsFromFile(totalQuantity, file)
@@ -132,8 +148,7 @@ if __name__ == '__main__':
 				except FileNotFoundError:
 					print("File not found. Please try again")
 				except ValueError:
-					print("Invalid characters found in file or invalid number of inputs. Please try again")
-				break
+					print("Invalid input found in file, please try again")
 		# exits the program
 		elif userInput == 3:
 			sys.exit()
