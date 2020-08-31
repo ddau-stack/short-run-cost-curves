@@ -23,12 +23,32 @@ def readPricePerUnit():
 			print("Invalid price per unit, please try again")
 	return pricePerUnit
 
+def readFixedCost():
+	while True:
+		try:
+			fixedCost = float(input("Enter the total fixed costs: "))
+			if fixedCost <= 0:
+				raise ValueError()
+			break
+		except ValueError:
+			print("Invalid fixed cost, please try again")
+	return fixedCost
+
 # reads the variable costs from standard input and stores them into a list
 def createVariableCosts(quantity):
 	tempList = []
 	tempList.append(float(0))
 	for i in range(quantity):
-		tempList.append(float(input("Enter the variable cost when " + str(i+1) + " output is produced: ")))
+		while True:
+			try:
+				tempItem = float(input("Enter the variable cost when " + str(i+1) + " output is produced: "))
+				if(tempItem <= 0):
+					raise ValueError()
+				else:
+					tempList.append(tempItem)
+					break
+			except ValueError:
+				print("Invalid variable cost, please try again")
 	return tempList
 
 # checks if the file is the appropriate size for reading
@@ -38,12 +58,12 @@ def checkFileSize(file):
 	if(len(fileContents) != (int(fileContents[0]) + 3)):
 		raise ValueError()
 
-def readTotalQuantityFromFile():
+def readTotalQuantityFromFile(file):
 	totalQuantity = int(file.readline())
 	if totalQuantity <= 0:
 		raise ValueError()
 
-def readPricePerUnitFromFile():
+def readPricePerUnitFromFile(file):
 	pricePerUnit = float(file.readline())
 	if pricePerUnit <= 0:
 		raise ValueError()
@@ -143,7 +163,7 @@ if __name__ == '__main__':
 		if userInput == 1:
 			totalQuantity = readTotalQuantity()
 			pricePerUnit = readPricePerUnit()
-			fixedCost = float(input("Enter the total fixed costs: "))
+			fixedCost = readFixedCost()
 			variableCosts = createVariableCosts(totalQuantity)
 			break
 		# get inputs from file
