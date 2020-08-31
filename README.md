@@ -1,5 +1,5 @@
 # Short-Run Cost Curves
-This is a small python project where I get user input to compute the short-run cost curves and run basic economic analysis for a firm in a perfectly competitve market.
+This is a small python project where I get user input to compute the short-run cost curves and run basic economic analysis for a firm in a perfectly competitive market. The unit tests are currently in progress.
 
 ## Dependencies
 Tkinter
