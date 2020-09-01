@@ -8,7 +8,7 @@ def readTotalQuantity():
 			if totalQuantity == 0:
 				print("Total quantity can not be 0, please try again\n")
 			elif totalQuantity < 0:
-				print("Total quantity can not be less than 0, please try again\n")
+				print("Total quantity can not be negative, please try again\n")
 			else:
 				return totalQuantity
 		except ValueError:
@@ -18,12 +18,14 @@ def readPricePerUnit():
 	while True:
 		try: 
 			pricePerUnit = float(input("Enter the price per unit: "))
-			if pricePerUnit <= 0:
-				raise ValueError()
-			break
+			if pricePerUnit == 0:
+				print("Price per unit can not be 0, please try again\n")
+			elif pricePerUnit < 0:
+				print("Price per unit can not be negative, please try again\n")
+			else:
+				return pricePerUnit
 		except ValueError:
-			print("Invalid price per unit, please try again")
-	return pricePerUnit
+			print("Invalid input for price per unit, please try again\n")
 
 def readFixedCost():
 	while True:
