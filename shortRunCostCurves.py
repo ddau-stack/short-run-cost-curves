@@ -5,12 +5,14 @@ def readTotalQuantity():
 	while True:
 		try: 
 			totalQuantity = int(input("What is the total quantity of output? "))
-			if totalQuantity <= 0:
-				raise ValueError()
-			break
+			if totalQuantity == 0:
+				print("Total quantity can not be 0, please try again\n")
+			elif totalQuantity < 0:
+				print("Total quantity can not be less than 0, please try again\n")
+			else:
+				return totalQuantity
 		except ValueError:
-			print("Invalid quantity, please try again")
-	return totalQuantity
+			print("Invalid input for quantity, please try again\n")
 
 def readPricePerUnit():
 	while True:
