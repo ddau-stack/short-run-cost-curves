@@ -19,9 +19,9 @@ price per unit
 fixed cost
 variable costs
 
-notes: 
-    -if the number of variable costs is greater than the total quantity, the program will only read the number of variable costs equal to the total quantity 
-    -the script will not accept any value less than or equal to 0 for the total quantity and price per unit
+notes:  
+    -if the number of variable costs is greater than the total quantity, the program will only read the number of variable costs equal to the total quantity  
+    -the script will not accept any value less than or equal to 0 for the total quantity and price per unit  
 
 Run the script with the following command:
 ```
