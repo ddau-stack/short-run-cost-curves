@@ -38,17 +38,21 @@ def readFixedCost():
 def createVariableCosts(quantity):
 	tempList = []
 	tempList.append(float(0))
-	for i in range(quantity):
+	for i in range(1, quantity+1):
 		while True:
 			try:
-				tempItem = float(input("Enter the variable cost when " + str(i+1) + " output is produced: "))
-				if(tempItem <= 0):
-					raise ValueError()
+				tempItem = float(input("Enter the variable cost when " + str(i) + " output is produced: "))
+				if tempItem == 0:
+					print("Variable cost can not be 0, please try again\n")
+				elif tempItem < 0:
+					print("Variable cost can not be less than 0, please try again\n")
+				elif tempItem < tempList[i-1]:
+					print("Variable costs can not be decreasing as output increases, please try again\n")
 				else:
 					tempList.append(tempItem)
 					break
 			except ValueError:
-				print("Invalid variable cost, please try again")
+				print("Invalid input for variable cost, please try again\n")
 	return tempList
 
 # checks if the file is the appropriate size for reading
