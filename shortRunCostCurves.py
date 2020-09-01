@@ -31,12 +31,14 @@ def readFixedCost():
 	while True:
 		try:
 			fixedCost = float(input("Enter the total fixed costs: "))
-			if fixedCost <= 0:
-				raise ValueError()
-			break
+			if fixedCost == 0:
+				print("Fixed cost can not be 0, please try again\n")
+			elif fixedCost < 0:
+				print("Fixed cost can not be negative, please try again\n")
+			else:
+				return fixedCost
 		except ValueError:
-			print("Invalid fixed cost, please try again")
-	return fixedCost
+			print("Invalid input for fixed cost, please try again\n")
 
 # reads the variable costs from standard input and stores them into a list
 def createVariableCosts(quantity):
