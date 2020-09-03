@@ -32,8 +32,11 @@ class TestShortRunCostCurves(unittest.TestCase):
 		testQuantity = 5
 		testVariableCosts = [70, 90, 130, 170, 190]
 		testFixedCost = 40
+		testFixedCost2 = 11
 		result = shortRunCostCurves.createTotalCosts(testFixedCost, testVariableCosts, testQuantity)
 		self.assertEqual(result, [110.0, 130.0, 170.0, 210.0, 230.0])
+		result = shortRunCostCurves.createTotalCosts(testFixedCost2, testVariableCosts, testQuantity)
+		self.assertEqual(result, [81.0, 101.0, 141.0, 181.0, 201.0])
 
 	# incomplete test
 #	def testCreateMarginalCosts(self):
@@ -48,6 +51,8 @@ class TestShortRunCostCurves(unittest.TestCase):
 		expected = [3, 2, 3, 4, 5, 6]
 		result = shortRunCostCurves.createAvgCost(test_costs, test_quantity)
 		self.assertEqual(result, expected)
+
+	def testCheckShutDownRule(self):
 
 if __name__ == '__main__':
 	unittest.main()
