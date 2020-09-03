@@ -52,7 +52,16 @@ class TestShortRunCostCurves(unittest.TestCase):
 		result = shortRunCostCurves.createAvgCost(test_costs, test_quantity)
 		self.assertEqual(result, expected)
 
-	def testCheckShutDownRule(self):
+	def testComputeTotalProfit(self):
+		test_avg_total_costs = [0, 143.2, 300, 400]
+		test_revenue = 1023
+		result = shortRunCostCurves.computeTotalProfit(test_revenue, test_avg_total_costs, 2)
+		self.assertEqual(result, 723)
+		result = shortRunCostCurves.computeTotalProfit(test_revenue, test_avg_total_costs, 0)
+		self.assertEqual(result, 1023)
+		result = shortRunCostCurves.computeTotalProfit(test_revenue, test_avg_total_costs, 1)
+		self.assertEqual(result, 879.8)
+
 
 if __name__ == '__main__':
 	unittest.main()
