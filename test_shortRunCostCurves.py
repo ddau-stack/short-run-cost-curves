@@ -38,19 +38,18 @@ class TestShortRunCostCurves(unittest.TestCase):
 		result = shortRunCostCurves.createTotalCosts(testFixedCost2, testVariableCosts, testQuantity)
 		self.assertEqual(result, [81.0, 101.0, 141.0, 181.0, 201.0])
 
-	# incomplete test
-#	def testCreateMarginalCosts(self):
-#		testQuantity = 7
-#		testTotalCosts = [7, 69, 100, 100, 102, 103, 201]
-#		result = shortRunCostCurves.createMarginalCosts(testTotalCosts, testQuantity)
-#		self.assertEqual(result, [0, 7, 62, 31, 0, 2, 1])
-
 	def testCreateAvgCost(self):
 		test_quantity = 6
 		test_costs = [3, 4, 9, 16, 25, 36]
 		expected = [3, 2, 3, 4, 5, 6]
 		result = shortRunCostCurves.createAvgCost(test_costs, test_quantity)
 		self.assertEqual(result, expected)
+
+	def testCreateAvgFixedCosts(self):
+		test_fixed_cost = 43
+		test_quantity = 5
+		result = shortRunCostCurves.createAvgFixedCosts(test_fixed_cost, test_quantity)
+		self.assertEqual(result, [43.0, 21.5, 14.333333333333334, 10.75, 8.6])
 
 	def testComputeTotalProfit(self):
 		test_avg_total_costs = [0, 143.2, 300, 400]
