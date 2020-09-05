@@ -97,6 +97,14 @@ class TestShortRunCostCurves(unittest.TestCase):
 		result = shortRunCostCurves.computeTotalProfit(test_total_revenue, test_total_costs, 5)
 		self.assertEqual(result, -200.0)
 
+	def testCreateQuantities(self):
+		expected1 = [0, 1, 2, 3, 4, 5]
+		expected2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+		result1= shortRunCostCurves.createQuantities(6)
+		result2 = shortRunCostCurves.createQuantities(12)
+		self.assertEqual(expected1, result1)
+		self.assertEqual(expected2, result2)
+
 
 if __name__ == '__main__':
 	unittest.main()
