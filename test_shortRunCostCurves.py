@@ -29,13 +29,13 @@ class TestShortRunCostCurves(unittest.TestCase):
 		self.assertEqual(result, [0.0, 10.0, 30.0, 50.0, 70.0])
 
 	def testCreateTotalCosts(self):
-		testQuantity = 5
-		testVariableCosts = [70, 90, 130, 170, 190]
-		testFixedCost = 40
-		testFixedCost2 = 11
-		result = shortRunCostCurves.createTotalCosts(testFixedCost, testVariableCosts, testQuantity)
+		test_quantity = 5
+		test_variable_costs = [70, 90, 130, 170, 190]
+		test_fixed_cost = 40
+		test_fixed_cost2 = 11
+		result = shortRunCostCurves.createTotalCosts(test_fixed_cost, test_variable_costs, test_quantity)
 		self.assertEqual(result, [110.0, 130.0, 170.0, 210.0, 230.0])
-		result = shortRunCostCurves.createTotalCosts(testFixedCost2, testVariableCosts, testQuantity)
+		result = shortRunCostCurves.createTotalCosts(test_fixed_cost2, test_variable_costs, test_quantity)
 		self.assertEqual(result, [81.0, 101.0, 141.0, 181.0, 201.0])
 
 	def testCreateAvgCost(self):
@@ -60,7 +60,6 @@ class TestShortRunCostCurves(unittest.TestCase):
 		self.assertEqual(result, 1023)
 		result = shortRunCostCurves.computeTotalProfit(test_revenue, test_avg_total_costs, 1)
 		self.assertEqual(result, 879.8)
-
 
 if __name__ == '__main__':
 	unittest.main()
