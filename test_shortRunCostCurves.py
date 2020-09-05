@@ -61,5 +61,15 @@ class TestShortRunCostCurves(unittest.TestCase):
 		result = shortRunCostCurves.computeTotalProfit(test_revenue, test_avg_total_costs, 1)
 		self.assertEqual(result, 879.8)
 
+	def testComputeProfitMaxQuantity(self):
+		test_marginal_revenue = [0, 30, 60, 90, 120, 150, 180]
+		test_marginal_costs = [0, 40, 80, 120, 160, 200, 240]
+		test_marginal_costs2 = [0, 20, 40, 60, 80, 100, 120]
+		test_quantity = 7
+		result = shortRunCostCurves.computeProfitMaxQuantity(test_marginal_revenue, test_marginal_costs, test_quantity)
+		self.assertEqual(result, 0)
+		result = shortRunCostCurves.computeProfitMaxQuantity(test_marginal_revenue, test_marginal_costs2, test_quantity)
+		self.assertEqual(result, 6)
+
 if __name__ == '__main__':
 	unittest.main()
