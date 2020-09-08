@@ -53,7 +53,7 @@ def createVariableCosts(quantity):
 				elif tempItem < 0:
 					print("Variable cost can not be less than 0, please try again\n")
 				elif tempItem < tempList[i-1]:
-					print("Variable costs can not be decreasing as output increases, please try again\n")
+					print("Variable cost can not be decreasing as output increases, please try again\n")
 				else:
 					tempList.append(tempItem)
 					break
@@ -143,10 +143,12 @@ def computeTotalProfit(totalRevenue, totalCosts, maxProfitQuantity):
 	return totalRevenue - totalCosts[maxProfitQuantity]
 
 # prints a statement in the economic analysis if the shut down rule is met
-# (when the price per unit is less than the average variable cost)
+# (when the price per unit is less than the average variable cost) or if
+# the profit maximizing quantity is 0
 def checkShutDownRule(pricePerUnit, avgVariableCosts, maxProfitQuantity):
-	if(pricePerUnit < avgVariableCosts[maxProfitQuantity]):
-		print("This firm should shut down")
+	if maxProfitQuantity == 0 or pricePerUnit < avgVariableCosts[maxProfitQuantity]:
+	 	return True
+	return False
 
 # creates a list from 0 to the quantity
 def createQuantities(quantity):
@@ -219,7 +221,10 @@ if __name__ == '__main__':
 	print("Profit maximizing quantity: " + str(maxProfitQuantity))
 	print("Total Revenue: " + str(totalRevenue))
 	print("Total Profit: " + str(totalProfit))
-	checkShutDownRule(pricePerUnit, avgVariableCosts, maxProfitQuantity)
+	if checkShutDownRule(pricePerUnit, avgVariableCosts, maxProfitQuantity):
+		print("This firm should shut down.")
+	else:
+		print("This firm should keep producing")
 
 	# creates the x axis for the graph
 	quantity = createQuantities(totalQuantity)
