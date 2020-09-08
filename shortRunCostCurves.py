@@ -105,7 +105,8 @@ def createMarginalCosts(totalCosts, quantity):
 # creates a list representing the marginal revenue which is equal to the price per unit
 def createMarginalRevenue(pricePerUnit, quantity):
 	tempList = []
-	for i in range(quantity):
+	tempList.append(float(0))
+	for i in range(quantity-1):
 		tempList.append(float(pricePerUnit))
 	return tempList
 
@@ -211,6 +212,8 @@ if __name__ == '__main__':
 	avgVariableCosts = createAvgCost(variableCosts, totalQuantity)
 	avgTotalCosts = createAvgCost(totalCosts, totalQuantity)
 	avgFixedCosts = createAvgFixedCosts(fixedCost, totalQuantity)
+	printCosts(marginalCosts)
+	printCosts(marginalRevenue)
 
 	# economical analysis
 	maxProfitQuantity = computeProfitMaxQuantity(marginalRevenue, marginalCosts, totalQuantity)
@@ -224,7 +227,7 @@ if __name__ == '__main__':
 	if checkShutDownRule(pricePerUnit, avgVariableCosts, maxProfitQuantity):
 		print("This firm should shut down.")
 	else:
-		print("This firm should keep producing")
+		print("This firm should keep producing.")
 
 	# creates the x axis for the graph
 	quantity = createQuantities(totalQuantity)
