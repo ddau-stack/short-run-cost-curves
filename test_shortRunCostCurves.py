@@ -45,6 +45,15 @@ class TestShortRunCostCurves(unittest.TestCase):
 		result = shortRunCostCurves.createAvgCost(test_costs, test_quantity)
 		self.assertEqual(result, expected)
 
+	def testCreateMarginalRevenue(self):
+		test_prices = [30, 90, 96, 1000, 2000]
+		result = shortRunCostCurves.createMarginalRevenue(30, 7)
+		self.assertEqual(result, [0, 30, 30, 30, 30, 30, 30])
+		result = shortRunCostCurves.createMarginalRevenue(1000, 2)
+		self.assertEqual(result, [0, 1000])
+		result = shortRunCostCurves.createMarginalRevenue(6, 11)
+		self.assertEqual(result, [0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6])
+
 	def testCreateAvgFixedCosts(self):
 		test_fixed_cost = 43
 		test_quantity = 5
